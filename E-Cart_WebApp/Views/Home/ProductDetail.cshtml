@@ -1,0 +1,42 @@
+﻿@model E_Cart_WebApp.Models.Product
+
+@{
+    ViewData["Title"] = "ProductDetail";
+    var productName = Model.ProductName;
+    var unitPrice = Model.UnitPrice;
+    var quantityPerUnit = Model.QuantityPerUnit;
+    var unitInStock = Model.UnitsInStock;
+
+
+}
+
+<h1 class="mt-5 text-center">ProductDetail</h1>
+
+<div class="d-flex justify-content-center align-content-center mt-5">
+   @* <h4>Product Details</h4>
+    <hr />
+    <h4>@Model.ProductName - @Model.UnitPrice</h4>*@
+
+
+    <div class="card w-75">
+        <img class="card-img-top img-fluid rounded mx-auto d-block w-50" src="~/images/store-4156934.svg" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">@productName</h5>
+            <p class="card-text">Some description about product</p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Unit Price : @unitPrice</li>
+            <li class="list-group-item">Quantity Per Unit : @quantityPerUnit</li>
+            <li class="list-group-item">Unit in Stock : @unitInStock</li>
+        </ul>
+        <div class="card-body">
+            <a href="#" class="btn btn-primary">Buy Now</a>
+        </div>
+    </div>
+
+
+</div>
+<div>
+    <a class="btn btn-link" asp-action="Edit" asp-route-id="@Model?.ProductID">Edit</a> |
+    <a asp-action="Product">Back to List</a>
+</div>
