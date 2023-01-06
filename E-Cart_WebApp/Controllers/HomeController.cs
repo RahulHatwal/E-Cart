@@ -26,7 +26,7 @@ namespace E_Cart_WebApp.Controllers
 
         public async Task<IActionResult> Product()
         {
-            var response = await _httpClient.GetAsync("https://localhost:7185/api/productss");
+            var response = await _httpClient.GetAsync("https://localhost:7185/api/products");
 
             if (response.IsSuccessStatusCode)
             {
@@ -46,8 +46,10 @@ namespace E_Cart_WebApp.Controllers
             return View();
         }
 
+       
 
-    public async Task<IActionResult> ProductDetail(int id)
+
+        public async Task<IActionResult> ProductDetail(int id)
     {
         var response = await _httpClient.GetAsync($"https://localhost:7185/api/products/{id}");
 
@@ -93,14 +95,19 @@ namespace E_Cart_WebApp.Controllers
         [HttpPost]
         public int Increment(int qty)
         {
-            return qty + 1;
+            if(qty < 100)
+                return qty + 1;
+            return qty;
         }
         
         
         [HttpPost]
         public int Decrement(int qty)
         {
-            return qty - 1;
+            if(qty > 0) { 
+                return qty - 1;
+            }
+            return qty;
         }
 
 

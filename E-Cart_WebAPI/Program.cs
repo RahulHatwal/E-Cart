@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Serilog;
 using Serilog.Sinks.MSSqlServer;
+using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -46,15 +47,20 @@ builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
     {
-        Title = "New Swagger",
+        Title = "E Cart Web API",
         Version = "v1",
-        Description = "New Swagger Document"
+        Description = "A Simple E-Cart(E-Commerce App) Web API"
     });
 
 
     var filename = Assembly.GetExecutingAssembly().GetName().Name + ".xml";
     var filepath = Path.Combine(AppContext.BaseDirectory, filename);
     options.IncludeXmlComments(filepath);
+
+    options.CustomOperationIds(apiDescription =>
+    {
+        return apiDescription.TryGetMethodInfo(out MethodInfo methodInfo) ? methodInfo.Name : null;
+    });
 });
 
 var app = builder.Build();
@@ -63,7 +69,11 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        options.DisplayOperationId();
+    });
+    
 }
 
 app.UseHttpsRedirection();

@@ -19,31 +19,31 @@
         $(document).ready(function(){
             
 
-            var incrementUrl = '@Url.Action("Increment","Home")';
-            var decrementUrl = '@Url.Action("Decrement","Home")';
+            //var incrementUrl = '@Url.Action("Increment","Home")';
+            //var decrementUrl = '@Url.Action("Decrement","Home")';
 
-            $.fn.btnIncrementDecrement = function (url) {
-                $(this).click(function () {
-                    qty = $(this).closest("tr").find('input[type=number]');
-                    quantity = qty.val()
-                    $.ajax({
-                        type: 'POST',
-                        url: url,
-                        data: { qty: quantity },
-                        dataType: 'text',
-                        success: function (message) {
-                            qty.val(message);
-                        },
-                        error: function (req, status, error) {
-                            console.log("An error occured..")
-                        }
-                    })
-                })
-            }
+            //$.fn.btnIncrementDecrement = function (url) {
+            //    $(this).click(function () {
+            //        qty = $(this).closest("tr").find('input[type=number]');
+            //        quantity = qty.val()
+            //        $.ajax({
+            //            type: 'POST',
+            //            url: url,
+            //            data: { qty: quantity },
+            //            dataType: 'text',
+            //            success: function (message) {
+            //                qty.val(message);
+            //            },
+            //            error: function (req, status, error) {
+            //                console.log("An error occured..")
+            //            }
+            //        })
+            //    })
+            //}
 
 
-            $(".add").each(function() { $.fn.btnIncrementDecrement(incrementUrl)});
-            $(".sub").each(function() { $.fn.btnIncrementDecrement(decrementUrl)});
+            //$(".add").each(function() { $.fn.btnIncrementDecrement(incrementUrl)});
+            //$(".sub").each(function() { $.fn.btnIncrementDecrement(decrementUrl)});
 
             $(".add").each(function () {
                 $(this).click(function(){

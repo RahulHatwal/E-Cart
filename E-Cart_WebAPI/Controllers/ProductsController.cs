@@ -99,11 +99,14 @@ namespace E_Cart_WebAPI.Controllers
                 throw new KeyNotFoundException("Product is not found with given Id");
             }
             _logger.LogInformation("Product with given id found");
-            return product;
+            return Ok(product);
         }
 
         // POST: api/Products
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Creating a product.
+        /// </summary>
         [HttpPost]
         public async Task<ActionResult<Product>> PostProduct(Product product)
         {
@@ -125,6 +128,9 @@ namespace E_Cart_WebAPI.Controllers
 
         // PUT: api/Product/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        /// <summary>
+        /// Updating a product.
+        /// </summary>
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProduct(int id, Product product)
         {
@@ -141,11 +147,11 @@ namespace E_Cart_WebAPI.Controllers
             {
                 if (!await _repository.ExistsAsync(id))
                 {
-                    throw new ApplicationException("Product Cannot be Updated because Product is not found with given Id");
+                    throw new KeyNotFoundException("Product Cannot be Updated because Product is not found with given Id");
                 }
                 else
                 {
-                    throw new ApplicationException("Something went wrong...");
+                    throw new KeyNotFoundException("Something went wrong...");
                 }
             }
 
@@ -155,6 +161,9 @@ namespace E_Cart_WebAPI.Controllers
 
 
         // DELETE: api/Products/5
+        /// <summary>
+        /// Deleting a product.
+        /// </summary>
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteProduct(int id)
         {
@@ -164,7 +173,7 @@ namespace E_Cart_WebAPI.Controllers
                 throw new KeyNotFoundException("Product is not found with given Id");
             }
             await _repository.DeleteAsync(id);
-            return Ok($"Product with ID {id} was deleted successfully.");
+            return NoContent();
         }
 
         private async Task<bool> ProductExists(int id)
