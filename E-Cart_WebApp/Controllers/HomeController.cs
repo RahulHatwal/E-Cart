@@ -1,5 +1,4 @@
-﻿using E_Cart_WebApp.Data;
-using E_Cart_WebApp.DTOs;
+﻿using E_Cart_WebApp.DTOs;
 using E_Cart_WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +14,7 @@ namespace E_Cart_WebApp.Controllers
     {
         private readonly HttpClient _httpClient;
         private readonly ILogger<HomeController> _logger;
-        public HomeController(ILogger<HomeController> logger,NorthwindContext northwindContext)
+        public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
             _httpClient = new HttpClient();
@@ -25,16 +24,8 @@ namespace E_Cart_WebApp.Controllers
         {
             return View();
         }
-        //public async Task<IActionResult> Product(string productSearch)
-        //{
-        //    var pquery = from x in _northwindContext.Products select x;
-        //    if (!String.IsNullOrEmpty(productSearch))
-        //    {
-        //        pquery = pquery.Where(x => x.ProductName.StartsWith(productSearch));
-        //    }
-        //    return View(await pquery.AsNoTracking().ToListAsync());
-
-        //}
+     
+        // Controller for showing list of Products
         public async Task<IActionResult> Product(string productSearch="all")
         {
             var response = await _httpClient.GetAsync($"https://localhost:7185/api/products?search={productSearch}");
@@ -57,9 +48,7 @@ namespace E_Cart_WebApp.Controllers
             return View();
         }
 
-
-
-
+        // Controller for showing a specific product by using id
         public async Task<IActionResult> ProductDetail(int id)
         {
             var response = await _httpClient.GetAsync($"https://localhost:7185/api/products/{id}");
@@ -88,20 +77,9 @@ namespace E_Cart_WebApp.Controllers
         }
 
 
-        //public IActionResult Product()
-        //{
-        //    return View(_northwindContext.Products);
-        //}
+        
 
-        //public IActionResult ProductDetail(int id)
-        //{
-        //    var productInfo = _northwindContext.Products.
-        //        Where(p => p.ProductID == id).
-        //        FirstOrDefault();
-
-        //    return View(productInfo);
-        //}
-
+        // Quantity Increment
 
         [HttpPost]
         public int Increment(int qty)
@@ -111,7 +89,8 @@ namespace E_Cart_WebApp.Controllers
             return qty;
         }
         
-        
+        // Quantity Decrement
+
         [HttpPost]
         public int Decrement(int qty)
         {
@@ -122,6 +101,7 @@ namespace E_Cart_WebApp.Controllers
         }
 
 
+        // Global Error Page for all kinds of Exception
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

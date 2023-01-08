@@ -12,12 +12,8 @@
    "ProjectRootNamespace": "E_Cart_WebApp",
    "Schemas": null,
    "SelectedHandlebarsLanguage": 0,
-   "SelectedToBeGenerated": 0,
+   "SelectedToBeGenerated": 2,
    "Tables": [
-      {
-         "Name": "[dbo].[ApplicationAuditTrail]",
-         "ObjectType": 0
-      },
       {
          "Name": "[dbo].[Categories]",
          "ObjectType": 0
@@ -32,10 +28,6 @@
       },
       {
          "Name": "[dbo].[Customers]",
-         "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[ECartApiLog]",
          "ObjectType": 0
       },
       {
@@ -85,146 +77,6 @@
       {
          "Name": "[dbo].[UserMaster]",
          "ObjectType": 0
-      },
-      {
-         "Name": "[dbo].[Alphabetical list of products]",
-         "ObjectType": 3
-      },
-      {
-         "Name": "[dbo].[Category Sales for 1997]",
-         "ObjectType": 3
-      },
-      {
-         "Name": "[dbo].[Current Product List]",
-         "ObjectType": 3
-      },
-      {
-         "Name": "[dbo].[Customer and Suppliers by City]",
-         "ObjectType": 3
-      },
-      {
-         "Name": "[dbo].[Invoices]",
-         "ObjectType": 3
-      },
-      {
-         "Name": "[dbo].[Order Details Extended]",
-         "ObjectType": 3
-      },
-      {
-         "Name": "[dbo].[Order Subtotals]",
-         "ObjectType": 3
-      },
-      {
-         "Name": "[dbo].[Orders Qry]",
-         "ObjectType": 3
-      },
-      {
-         "Name": "[dbo].[Product Sales for 1997]",
-         "ObjectType": 3
-      },
-      {
-         "Name": "[dbo].[Products Above Average Price]",
-         "ObjectType": 3
-      },
-      {
-         "Name": "[dbo].[Products by Category]",
-         "ObjectType": 3
-      },
-      {
-         "Name": "[dbo].[Quarterly Orders]",
-         "ObjectType": 3
-      },
-      {
-         "Name": "[dbo].[Sales by Category]",
-         "ObjectType": 3
-      },
-      {
-         "Name": "[dbo].[Sales Totals by Amount]",
-         "ObjectType": 3
-      },
-      {
-         "Name": "[dbo].[Summary of Sales by Quarter]",
-         "ObjectType": 3
-      },
-      {
-         "Name": "[dbo].[Summary of Sales by Year]",
-         "ObjectType": 3
-      },
-      {
-         "Name": "[dbo].[CalculateCumulativeTotal]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[CustomerDetailsCursorOptimisticExample]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[CustomerDetailsCursorScrollExample]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[CustOrderHist]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[CustOrdersDetail]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[CustOrdersOrders]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[Employee Sales by Country]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[GetProductsWithReorderYN]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[GetTotalOrders]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[IsReorderNeeded]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[ProductsWithReOrderYNCol_WithCursor]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[ProductsWithReOrderYNCol]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[Sales by Year]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[SalesByCategory]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[SelectProductByProductID]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[SelectProductByProductIDAndProductName]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[SelectProductByProductIDAndProductNameAndOutputParam]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[Ten Most Expensive Products]",
-         "ObjectType": 1
-      },
-      {
-         "Name": "[dbo].[GetOrdersInGivenYear]",
-         "ObjectType": 2
       }
    ],
    "UiHint": "LAPTOP-8DUKS1M0\\SQLEXPRESS.Northwind",

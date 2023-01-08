@@ -1,0 +1,53 @@
+﻿@model E_Cart_WebApp.DTOs.ProductUpdateDTO
+
+<div class="d-flex justify-content-center flex-column align-content-center">
+    <h1 class="text-center mt-5 mb-3">Edit a Product</h1>
+    <form method="post" asp-controller="Admin" asp-action="EditProduct" class="align-self-center w-75">
+
+        <div class="mb-3">
+            <label for="productID" class="form-label">ProductID</label>
+            <input type="number" class="form-control" id="productID" asp-for="ProductID" readonly>
+        </div>
+        <div class="mb-3">
+            <label for="productName" class="form-label">Product Name</label>
+            <input type="text" class="form-control" id="productName" asp-for="ProductName">
+        </div>
+        <div class="mb-3">
+            <label for="productSupplier" class="form-label">Supplier</label>
+            @*<input type="text" class="form-control" id="productSupplier" asp-for="SupplierId">*@
+            @*@Html.DropDownList("Category",ViewBag.categoryDropDown as SelectList, "-- Select Category --")*@
+            <select class="form-select" asp-items="Model.SupplierSelectList" asp-for="SelectedSupplier">
+                <option>Select A Supplier</option>
+            </select>
+
+
+        </div>
+        <div class="mb-3">
+            <label for="productCategory" class="form-label">Category</label>
+            @*<input type="text" class="form-control" id="productCategory" asp-for="CategoryId">*@
+            @*  @Html.DropDownList("Supplier",ViewBag.supplierDropDown as SelectList, "-- Select Supplier --")*@
+            <select class="form-select" asp-items="Model.CategoriesSelectList" asp-for="SelectedCategory">
+                <option>Select A Category</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="productQuantity" class="form-label">Quantity Per Unit</label>
+            <input type="number" class="form-control" id="productQuantity" asp-for="QuantityPerUnit">
+        </div>
+        <div class="mb-3">
+            <label for="productUnitPrice" class="form-label">Unit Price</label>
+            <input type="number" class="form-control" id="productUnitPrice" asp-for="UnitPrice">
+        </div>
+        <div class="mb-3">
+            <label for="productReorderLevel" class="form-label">Reorder Level</label>
+            <input type="number" class="form-control" id="productReorderLevel" asp-for="ReorderLevel">
+        </div>
+        <div class="mb-3 form-check">
+            <label class="form-check-label" for="isDiscontinued">Discontinued</label>
+            <input type="checkbox" class="form-check-input" id="isDiscontinued" asp-for="Discontinued">
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary w-100">Edit</button>
+        </div>
+    </form>
+</div>
