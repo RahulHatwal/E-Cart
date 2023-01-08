@@ -1,5 +1,9 @@
-﻿using E_Cart_WebApp.Models;
+﻿using E_Cart_WebApp.Data;
+using E_Cart_WebApp.DTOs;
+using E_Cart_WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using Newtonsoft.Json;
 using NuGet.Protocol;
 using System.Diagnostics;
@@ -11,9 +15,7 @@ namespace E_Cart_WebApp.Controllers
     {
         private readonly HttpClient _httpClient;
         private readonly ILogger<HomeController> _logger;
-        NorthwindContext northwindDb = new NorthwindContext();
-
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger,NorthwindContext northwindContext)
         {
             _logger = logger;
             _httpClient = new HttpClient();
@@ -23,17 +25,26 @@ namespace E_Cart_WebApp.Controllers
         {
             return View();
         }
+        //public async Task<IActionResult> Product(string productSearch)
+        //{
+        //    var pquery = from x in _northwindContext.Products select x;
+        //    if (!String.IsNullOrEmpty(productSearch))
+        //    {
+        //        pquery = pquery.Where(x => x.ProductName.StartsWith(productSearch));
+        //    }
+        //    return View(await pquery.AsNoTracking().ToListAsync());
 
-        public async Task<IActionResult> Product()
+        //}
+        public async Task<IActionResult> Product(string productSearch="all")
         {
-            var response = await _httpClient.GetAsync("https://localhost:7185/api/products");
+            var response = await _httpClient.GetAsync($"https://localhost:7185/api/products?search={productSearch}");
 
             if (response.IsSuccessStatusCode)
             {
                 var responseContent = await response.Content.ReadAsStringAsync();
 
-                var products = JsonConvert.DeserializeObject<List<Product>>(responseContent);
-
+                var products =  JsonConvert.DeserializeObject<List<Product>>(responseContent);
+          
                 return View(products);
             }
             else
@@ -46,30 +57,30 @@ namespace E_Cart_WebApp.Controllers
             return View();
         }
 
-       
+
 
 
         public async Task<IActionResult> ProductDetail(int id)
-    {
-        var response = await _httpClient.GetAsync($"https://localhost:7185/api/products/{id}");
-
-        if (response.IsSuccessStatusCode)
         {
-            var responseContent = await response.Content.ReadAsStringAsync();
+            var response = await _httpClient.GetAsync($"https://localhost:7185/api/products/{id}");
 
-            var product = JsonConvert.DeserializeObject<Product>(responseContent);
+            if (response.IsSuccessStatusCode)
+            {
+                var responseContent = await response.Content.ReadAsStringAsync();
 
-            return View(product);
-        }
-        else
-        {
+                var product = JsonConvert.DeserializeObject<Product>(responseContent);
+
+                return View(product);
+            }
+            else
+            {
                 // Log the error
                 _logger.LogError($"Failed to get product with ID {id}: {response.ReasonPhrase}");
                 return RedirectToAction("Error", new { message = response.ReasonPhrase });
-        }
+            }
 
-        return View();
-    }
+            return View();
+        }
 
         public IActionResult Privacy()
         {
@@ -78,13 +89,13 @@ namespace E_Cart_WebApp.Controllers
 
 
         //public IActionResult Product()
-        //{   
-        //    return View(northwindDb.Products);
+        //{
+        //    return View(_northwindContext.Products);
         //}
 
         //public IActionResult ProductDetail(int id)
         //{
-        //    var productInfo = northwindDb.Products.
+        //    var productInfo = _northwindContext.Products.
         //        Where(p => p.ProductID == id).
         //        FirstOrDefault();
 

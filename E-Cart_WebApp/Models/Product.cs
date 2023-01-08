@@ -18,6 +18,7 @@ namespace E_Cart_WebApp.Models
         public Product()
         {
             Order_Details = new HashSet<Order_Detail>();
+            ProductsCarts = new HashSet<ProductsCart>();
         }
 
         [Key]
@@ -44,5 +45,7 @@ namespace E_Cart_WebApp.Models
         public virtual Supplier Supplier { get; set; }
         [InverseProperty("Product")]
         public virtual ICollection<Order_Detail> Order_Details { get; set; }
+        [InverseProperty("Product")]
+        public virtual ICollection<ProductsCart> ProductsCarts { get; set; }
     }
 }

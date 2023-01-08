@@ -70,11 +70,12 @@ namespace E_Cart_WebAPI.Controllers
         /// <summary>
         /// Gets a list of all products.
         /// </summary>
-        [HttpGet]
-    
-        public async Task<IActionResult> GetProducts()
+        /// 
+
+        [HttpGet()]
+        public async Task<IActionResult> GetProducts(string search="all")
         {
-            var products = await _repository.GetAllAsync();
+            var products = await _repository.GetAllAsync(search);
             if (products == null)
             {
                 throw new ApplicationException("Something went wrong...");

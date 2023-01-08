@@ -1,7 +1,9 @@
 ﻿using E_Cart_WebAPI.Data;
 using E_Cart_WebAPI.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace E_Cart_WebAPI.Repository
 {
@@ -47,10 +49,16 @@ namespace E_Cart_WebAPI.Repository
             _context = context;
         }
 
-        public async Task<List<Product>> GetAllAsync()
-        {
-            return await _context.Products.ToListAsync();
+        public async Task<List<Product>> GetAllAsync(string searchQuery)
+        {   
+            var result = await _context.Products.ToListAsync();
+            if(searchQuery != "all" || searchQuery != null )
+             {
+                result = await _context.Products.Where(x => x.ProductName.StartsWith(searchQuery) || searchQuery.ToLower() == "all").ToListAsync();
+             }
+             return result;   
         }
+
 
 
         public async Task<Product> GetByIdAsync(int id)

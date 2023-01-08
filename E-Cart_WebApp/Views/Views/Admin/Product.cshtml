@@ -1,0 +1,81 @@
+﻿@model IEnumerable<E_Cart_WebApp.Models.Product>
+
+@{
+    ViewData["Title"] = "Product";
+}
+
+<h1 class="pt-5">Product</h1>
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.QuantityPerUnit)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UnitPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UnitsInStock)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UnitsOnOrder)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ReorderLevel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Discontinued)
+            </th>
+          
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                
+                <td>
+                    <a class="text-decoration-none" asp-action="ProductDetail" asp-route-id="@item.ProductID">@Html.DisplayFor(modelItem => item.ProductName)</a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.QuantityPerUnit)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UnitPrice)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UnitsInStock)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UnitsOnOrder)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReorderLevel)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Discontinued)
+                </td>
+        
+                <td>
+                    <div class="btn-group" role="group">
+                        <a asp-action="Edit" asp-route-id="@item.ProductID" type="button" class="btn btn-primary">Edit</a>
+                        <a asp-action="ProductDetail" asp-route-id="@item.ProductID" type="button" class="btn btn-secondary">Details</a>
+                        <a asp-action="Delete" asp-route-id="@item.ProductID type="button" class="btn btn-danger">Delete</a>
+                    </div>
+                  
+                </td>
+            </tr>
+        }
+    </tbody>
+
+   
+</table>
+<div class="d-grid gap-2">
+    <button class="btn btn-lg btn-primary" type="button">Create</button>
+</div>
