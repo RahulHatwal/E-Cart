@@ -1,8 +1,6 @@
 ﻿
-using Azure;
 using E_Cart_WebApp.DTOs;
 using E_Cart_WebApp.Models;
-using ECartProductAPIClient;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
@@ -53,10 +51,10 @@ namespace E_Cart_WebApp.Controllers
         }
 
         // Controller for deleting a product
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var productID = Int32.Parse(id);
-            var response = await _httpClient.DeleteAsync($"https://localhost:7185/api/products/{productID}");
+            //var productID = Int32.Parse(id);
+            var response = await _httpClient.DeleteAsync($"https://localhost:7185/api/products/{id}");
             if (response.IsSuccessStatusCode)
             {
                 return RedirectToAction("Product");
@@ -111,6 +109,11 @@ namespace E_Cart_WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ProductCreate(ProductDTO product)
         {
+
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("ProductCreate");
+            }
             var newProduct = new ProductDTO()
             {
                 ProductName = product.ProductName,

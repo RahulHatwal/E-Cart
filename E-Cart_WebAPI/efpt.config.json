@@ -55,6 +55,10 @@
          "ObjectType": 0
       },
       {
+         "Name": "[dbo].[ProductOrderDetail]",
+         "ObjectType": 0
+      },
+      {
          "Name": "[dbo].[Products]",
          "ObjectType": 0
       },

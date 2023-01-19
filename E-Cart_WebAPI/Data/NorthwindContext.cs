@@ -36,6 +36,7 @@ namespace E_Cart_WebAPI.Data
         public virtual DbSet<OrderSubtotal> OrderSubtotals { get; set; }
         public virtual DbSet<OrdersQry> OrdersQries { get; set; }
         public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<ProductOrderDetail> ProductOrderDetails { get; set; }
         public virtual DbSet<ProductSalesFor1997> ProductSalesFor1997s { get; set; }
         public virtual DbSet<ProductsAboveAveragePrice> ProductsAboveAveragePrices { get; set; }
         public virtual DbSet<ProductsByCategory> ProductsByCategories { get; set; }
@@ -216,6 +217,12 @@ namespace E_Cart_WebAPI.Data
                     .WithMany(p => p.Products)
                     .HasForeignKey(d => d.SupplierId)
                     .HasConstraintName("FK_Products_Suppliers");
+            });
+
+            modelBuilder.Entity<ProductOrderDetail>(entity =>
+            {
+                entity.HasKey(e => e.OrderId)
+                    .HasName("PK__ProductO__C3905BAF6102459A");
             });
 
             modelBuilder.Entity<ProductSalesFor1997>(entity =>

@@ -4,49 +4,11 @@
 @section Scripts {
     <script>
 
+        $(document).ready(function () {
 
-        //$('.add').click(function () {
-        //    if ($(this).prev().val() < 50) {
-        //        $(this).prev().val(+$(this).prev().val() + 1);
-        //    }
-        //});
-        //$('.sub').click(function () {
-        //    if ($(this).next().val() > 1) {
-        //        if ($(this).next().val() > 1) $(this).next().val(+$(this).next().val() - 1)
-        //    };
-        //})
-      
-        $(document).ready(function(){
-            
-
-            //var incrementUrl = '@Url.Action("Increment","Home")';
-            //var decrementUrl = '@Url.Action("Decrement","Home")';
-
-            //$.fn.btnIncrementDecrement = function (url) {
-            //    $(this).click(function () {
-            //        qty = $(this).closest("tr").find('input[type=number]');
-            //        quantity = qty.val()
-            //        $.ajax({
-            //            type: 'POST',
-            //            url: url,
-            //            data: { qty: quantity },
-            //            dataType: 'text',
-            //            success: function (message) {
-            //                qty.val(message);
-            //            },
-            //            error: function (req, status, error) {
-            //                console.log("An error occured..")
-            //            }
-            //        })
-            //    })
-            //}
-
-
-            //$(".add").each(function() { $.fn.btnIncrementDecrement(incrementUrl)});
-            //$(".sub").each(function() { $.fn.btnIncrementDecrement(decrementUrl)});
 
             $(".add").each(function () {
-                $(this).click(function(){
+                $(this).click(function () {
                     qty = $(this).closest("tr").find('input[type=number]');
                     quantity = qty.val()
                     $.ajax({
@@ -64,8 +26,9 @@
                 })
             })
 
+
             $(".sub").each(function () {
-                $(this).click(function(){
+                $(this).click(function () {
                     qty = $(this).closest("tr").find('input[type=number]');
                     quantity = qty.val()
                     $.ajax({
@@ -83,6 +46,143 @@
                 })
             })
 
+
+            $("input[type='checkbox']").on("click", function () {
+
+                if ($(this).is(":checked")) {
+                    console.log("checked");
+                    var productId = $(this).data("product-id");
+                    var productName = $(this).data("product-name");
+                    var productPrice = $(this).data("product-price");
+
+
+                    var data = {
+                        ProductId: productId,
+                        ProductName : productName,
+                        ProductPrice : productPrice,
+                        CartQuantity: $(this).closest("tr").find(".order-qty").val(),
+                        UserId: 1
+                    };
+                    console.log(productId);
+                    console.log(data);
+
+                    $.ajax({
+                        type: "POST",
+                        url: "AddToCart",
+                        data: data,
+                        success: function (response) {
+                            // do something with the response
+                            console.log(response);
+                        },
+                        error: function (xhr, status, error) {
+                            console.log("An error occurred: " + error);
+                        }
+                    });
+
+
+                
+                }
+                else {
+                    console.log("not checked")
+                }
+                
+            
+            })
+            //var productsChecked = [];
+            //var cartItemsCount  = @ViewBag.ProductsInCartCount;
+
+            //$("input[type='checkbox']").on("click", function () {
+
+            //    if ($(this).is(":checked")) {
+            //        console.log("checked");
+            //        var productId = $(this).data("product-id");
+            //        var product = {
+            //            ProductId: productId,
+            //            CartQuantity: $(this).closest("tr").find(".order-qty").val(),
+            //            UserId: 1,
+            //            Product: null,
+            //            User: null
+
+                                 
+            //        };
+            //        cartItemsCount += 1;
+            //        $("#cart-item-count").val(cartItemsCount);
+            //        console.log(product);
+
+            //        productsChecked.push(product);
+            //        console.log(productsChecked);
+
+            //    }
+            //    else {
+            //        console.log("not checked")
+            //        cartItemsCount -= 1;
+            //    }
+
+            //});
+
+            //$("#add-to-cart-btn").on("click",function(){
+            //    for (var i = 0; i < productsChecked.length; i++) 
+            //    {
+            //        var product = productsChecked[i];
+            //        console.log("Button Clicked", product);
+            //        $.ajax({
+            //        type: "POST",
+            //        url: "AddToCart",
+            //        data: product,
+            //        success: function (response) {
+            //            // do something with the response
+            //            console.log(response);
+            //        },
+            //        error: function (xhr, status, error) {
+            //            console.log("An error occurred: " + error);
+            //        }
+            //        });
+            //    }
+            //});
+
+
+            //$("#add-to-cart-btn").click(function () {
+
+
+            //    $("input[type='checkbox']:checked").each(function () {
+            //        console.log("checked");
+            //        var productId = $(this).data("product-id");
+            //        var product = {
+            //            ProductId: productId,
+            //            CartQuantity: $(this).closest("tr").find(".order-qty").val(),
+            //            UserId: 1,
+            //            Product: null,
+            //            User: null
+
+            //        };
+
+                    
+            //        console.log(product);
+            //        console.log(productsChecked);
+            //        productsChecked.push(product)
+
+            //    });
+
+            //    console.log("Button Clicked");
+            //    var items = JSON.stringify({ 'product': productsChecked })
+            //    console.log("items",items);
+            //    $.ajax({
+            //        type: "POST",
+            //        url: "AddToCart",
+            //        contentType: "application/json; charset=utf-8",
+            //        dataType: "json",
+            //        data: productsChecked,
+            //        success: function (response) {
+            //            // do something with the response
+            //            console.log(response);
+            //        },
+            //        error: function (req, status, error) {
+            //            console.log("An error occurred: ");
+            //        }
+            //    });
+            //});
+
+
         });
 
     </script>
@@ -91,26 +191,30 @@
 
     @{
     ViewData["Title"] = "Product";
-    var cartQuantity = 1;
+    //var cartQuantity = @ViewBag.ProductsInCartCount;
 }
-<div class="d-flex justify-content-between mt-5 align-content-center">
+<div class="w-100 mt-5">
+    <h1>Product</h1>
+</div>
+<div class="d-flex justify-content-between align-content-center">
+    <form method="get" class="d-flex w-50" asp-action="Product">
+        <input class="form-control me-sm-2" type="text" name="productSearch" placeholder="Search Product">
+        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+    </form>
     <div>
-        <h1>Product</h1>
+        <a class="btn btn-primary mx-3" id="add-to-cart-btn" type="button">Add to Cart</a>
+
+        <a class="btn btn-primary" type="button" asp-action="Cart"><i class="bi bi-bag">&nbsp; Cart()</i></a>
     </div>
-    <div>
-        <button class="btn btn-primary"><i class="bi bi-bag"></i>&nbsp; Cart(@cartQuantity)</button>
-    </div>
+
 </div>
 
-<form method="get" class="d-flex w-25" asp-action="Product">
-    <input class="form-control me-sm-2" type="text" name="productSearch" placeholder="Search Product">
-    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-</form>
 
-<table class="table table-striped  mt-5">
+
+<table class="table table-striped table-responsive-lg table-responsive-md table-responsive-sm  mt-5">
     <thead>
 
-        <tr>
+        <tr >
             <th>
                 @Html.DisplayNameFor(model => model.ProductName)
             </th>
@@ -135,7 +239,7 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
+            <tr class="m-t">
                 <td>
                     <a class="text-decoration-none" asp-action="ProductDetail" asp-route-id="@item.ProductID" class="">@Html.DisplayFor(modelItem => item.ProductName)</a>
                 </td>
@@ -147,12 +251,14 @@
                     @Html.DisplayFor(modelItem => item.UnitsInStock)
                 </td>
                 <td>
-                    QTY : <input type="number" class="order-qty" id="1" value="0" min="0" max="50" />
+                    QTY : <input type="number"  class="order-qty" id="1" value="0" min="0" max="50" />
                     <button type="button" style="border:none" id="sub" class="sub"><i class="bi bi-dash-square-fill"></i></button>
                     <button type="button" style="border:none" id="add" class="add"><i class="bi bi-plus-square-fill"></i></button>
                 </td>
                 <td>
-                    <input type="checkbox">
+                    @*<input type="checkbox" id="product-id-checkbox" value="@item.ProductID">*@
+                    <input type="checkbox" class="product-checkbox" data-product-name="@item.ProductName" data-product-price="@item.UnitPrice" data-product-id="@item.ProductID">
+
                 </td>
 
 
@@ -161,7 +267,25 @@
         }
     </tbody>
 </table>
-<div class="d-grid gap-2">
-    <button class="btn btn-lg btn-primary" type="button">Add to Cart</button>
-</div>
 
+
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@Html.DisplayFor(modelItem => item.ProductName)</h5>
+                        <p class="card-text">Price: $@Html.DisplayFor(modelItem => item.UnitPrice)</p>
+                        <p class="card-text">Quantity: @Html.DisplayFor(modelItem => item.UnitsInStock)</p>
+                        <input type="number" class="order-qty" id="1" value="0" min="0" max="50" />
+                        <button type="button" style="border:none" id="sub" class="sub"><i class="bi bi-dash-square-fill"></i></button>
+                        <button type="button" style="border:none" id="add" class="add"><i class="bi bi-plus-square-fill"></i></button>
+                        <input type="checkbox" class="product-checkbox" data-product-name="@item.ProductName" data-product-price="@item.UnitPrice" data-product-id="@item.ProductID">
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -5,7 +5,7 @@
 <form method="post" asp-controller="Admin" asp-action="ProductCreate" class="align-self-center w-75">
     <div class="mb-3">
         <label for="productName" class="form-label">Product Name</label>
-            <input type="text" class="form-control" id="productName" asp-for="ProductName">
+            <input type="text" class="form-control" id="productName" asp-for="ProductName" required>
     </div>
     <div class="mb-3">
         <label for="productSupplier" class="form-label">Supplier</label>
@@ -27,15 +27,21 @@
     </div>
     <div class="mb-3">
         <label for="productQuantity" class="form-label">Quantity Per Unit</label>
-            <input type="number" class="form-control" id="productQuantity" asp-for="QuantityPerUnit">
+            <input type="number" class="form-control" id="productQuantity" asp-for="QuantityPerUnit" required>
+            <span asp-validation-for="QuantityPerUnit" class="text-danger"></span>
+            @Html.ValidationMessageFor(m => m.QuantityPerUnit)
     </div>
     <div class="mb-3">
         <label for="productUnitPrice" class="form-label">Unit Price</label>
-            <input type="number" class="form-control" id="productUnitPrice" asp-for="UnitPrice">
+            <input type="number" class="form-control" id="productUnitPrice" asp-for="UnitPrice" required>
+            <span asp-validation-for="UnitPrice" class="text-danger"></span>
+            @Html.ValidationMessageFor(m => m.UnitPrice)
     </div>
    <div class="mb-3">
         <label for="productReorderLevel" class="form-label">Reorder Level</label>
-            <input type="number" class="form-control" id="productReorderLevel" asp-for="ReorderLevel"> 
+            <input type="number" class="form-control" id="productReorderLevel" asp-for="ReorderLevel" required>
+            <span asp-validation-for="ReorderLevel" class="text-danger"></span>
+            @Html.ValidationMessageFor(m => m.ReorderLevel)
     </div>
     <div class="mb-3 form-check">
         <label class="form-check-label" for="isDiscontinued">Discontinued</label>

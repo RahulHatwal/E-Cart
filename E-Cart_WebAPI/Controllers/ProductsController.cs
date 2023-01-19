@@ -24,58 +24,35 @@ namespace E_Cart_WebAPI.Controllers
             _logger = logger;
         }
 
-        //[HttpGet]
-        //public IActionResult GetAll()
-        //{
-        //    var products = _repository.GetAll();
-        //    if (products == null)
-        //    {
-        //        return NotFound("No products were found.");
-        //    }
-        //    return Ok(products);
-        //}
 
-        //[HttpGet("{id}")]
-        //public ActionResult<Product> GetById(int id)
-        //{
-        //    var product = _repository.GetById(id);
-        //    if (product == null)
-        //    {
-        //        return NotFound($"Product with ID {id} was not found.");
-        //    }
-        //    return Ok(product);
-        //}
 
-        //[HttpPost]
-        //public ActionResult<Product> Create(Product product)
-        //{
-        //    _repository.Add(product);
-        //    return CreatedAtAction(nameof(GetById), new { id = product.ProductId }, product);
-        //}
 
-        //[HttpDelete("{id}")]
-        //public ActionResult Delete(int id)
-        //{
-        //    var product = _repository.GetById(id);
-        //    if (product == null)
-        //    {
-        //        return NotFound($"Product with ID {id} was not found.");
-        //    }
-        //    _repository.Delete(id);
-        //    return Ok($"Product with ID {id} was deleted successfully.");
-        //}
-
+        // GET: api/Products
+        /// <summary>
+        /// Gets a list of all products by search query.
+        /// </summary>
+        /// 
+        [Route("search/{search}")]
+        [HttpGet]
+        public async Task<IActionResult> GetProductsBySearch(string search)
+        {
+            var products = await _repository.GetAllBySearchQueryAsync(search);
+            if (products == null)
+            {
+                throw new ApplicationException("Something went wrong...");
+            }
+            return Ok(products);
+        }
 
         // GET: api/Products
         /// <summary>
         /// Gets a list of all products.
         /// </summary>
         /// 
-
-        [HttpGet()]
-        public async Task<IActionResult> GetProducts(string search="all")
+        [HttpGet]
+        public async Task<IActionResult> GetProducts()
         {
-            var products = await _repository.GetAllAsync(search);
+            var products = await _repository.GetAllAsync();
             if (products == null)
             {
                 throw new ApplicationException("Something went wrong...");

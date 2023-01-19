@@ -11,8 +11,10 @@ namespace E_Cart_WebAPI.Repository
         //void Delete(int id);
 
 
-        Task<List<Product>> GetAllAsync(string searchQuery);
+        Task<List<Product>> GetAllBySearchQueryAsync(string searchQuery);
+        Task<List<Product>> GetAllAsync();
         Task<Product> GetByIdAsync(int id);
+
         Task<Product> AddAsync(Product product);
         Task<Product> UpdateAsync(Product product);
         Task DeleteAsync(int id);

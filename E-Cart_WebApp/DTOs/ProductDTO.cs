@@ -28,13 +28,20 @@ namespace E_Cart_WebApp.DTOs
         public List<SelectListItem> CategoriesSelectList { get; set; }
         public List<SelectListItem> SupplierSelectList { get; set; }
 
-
+        [RegularExpression(@"^\d+$", ErrorMessage = "Quantity should be positive integer")]
         [StringLength(20)]
         public string QuantityPerUnit { get; set; }
+
+        // This regular expression allows for any positive decimal number, including numbers with decimal places.
+        [RegularExpression(@"^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$", ErrorMessage = "Invalid Unit Price")]
         [Column(TypeName = "money")]
         public decimal? UnitPrice { get; set; }
         public short? UnitsInStock { get; set; }
         public short? UnitsOnOrder { get; set; }
+
+
+        // Any number that doesn't starts with zero
+        [RegularExpression(@"^[1-9][0-9]*$", ErrorMessage = "Invalid ReOrder Level")]
         public short? ReorderLevel { get; set; }
         public bool Discontinued { get; set; }
 

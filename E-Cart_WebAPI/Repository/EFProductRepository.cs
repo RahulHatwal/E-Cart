@@ -49,14 +49,25 @@ namespace E_Cart_WebAPI.Repository
             _context = context;
         }
 
-        public async Task<List<Product>> GetAllAsync(string searchQuery)
+        public async Task<List<Product>> GetAllBySearchQueryAsync(string searchQuery)
         {   
-            var result = await _context.Products.ToListAsync();
-            if(searchQuery != "all" || searchQuery != null )
-             {
-                result = await _context.Products.Where(x => x.ProductName.StartsWith(searchQuery) || searchQuery.ToLower() == "all").ToListAsync();
-             }
+
+            var result = await _context.Products.Where(x => x.ProductName.ToLower().StartsWith(searchQuery.ToLower())).ToListAsync();
+            if(result.Count > 0)
+            {
              return result;   
+            }
+            else
+            {
+                result = await _context.Products.ToListAsync();
+                return result;
+            }
+        }
+
+        public async Task<List<Product>> GetAllAsync()
+        {
+            var result = await _context.Products.ToListAsync();
+            return result;
         }
 
 

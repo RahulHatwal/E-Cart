@@ -4,12 +4,21 @@
     ViewData["Title"] = "Product";
 }
 
-<h1 class="pt-5">Product</h1>
+<script>
+    $('#deleteConfirmation').on('shown.bs.modal', function () {
+        $('#myInput').trigger('focus')
+    })
+</script>
 
-<div class="d-grid gap-2">
-    <a asp-action="ProductCreate" asp-controller="Admin" class="btn btn-primary" type="button">Create</a>
+<div class="d-flex justify-content-between align-content-center mt-5">
+    <div class="w-50">
+        <h1>Product</h1>
+    </div>
+    <div >
+        <a asp-action="ProductCreate" asp-controller="Admin" class="btn btn-primary" type="button">Add New Product</a>
+    </div>
 </div>
-<table class="table table-striped">
+<table class="table table-striped  table-responsive-lg table-responsive-md table-responsive-sm   mt-4">
     <thead>
         <tr>
             <th>
@@ -31,7 +40,7 @@
                 @Html.DisplayNameFor(model => model.ReorderLevel)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Discontinued)
+                @Html.DisplayNameFor(model => model.Discontinued)?
             </th>
           
             <th></th>
@@ -61,21 +70,42 @@
                     @Html.DisplayFor(modelItem => item.ReorderLevel)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Discontinued)
+                    @(item.Discontinued.Equals(true) ? "Yes" : "No")
                 </td>
-        
+               
                 <td>
                     <div class="btn-group" role="group">
                         <a asp-action="EditProduct" asp-route-id="@item.ProductID" type="button" class="btn btn-primary">Edit</a>
                         <a asp-action="ProductDetail" asp-route-id="@item.ProductID" type="button" class="btn btn-secondary">Details</a>
-                        <a asp-action="Delete" asp-route-id="@item.ProductID" type="button" class="btn btn-danger">Delete</a>
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#deleteConfirmation" class="btn btn-warning">Delete</button>
+                        <!-- Button trigger modal -->
+                       @* <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                            Launch static backdrop modal
+                        </button>*@
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="deleteConfirmation" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Are you sure you want to delete selected product ?</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                   
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                        <a type="button" class="btn btn-danger" asp-action="Delete" asp-route-id="@item.ProductID">Yes</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                   
                 </td>
             </tr>
         }
     </tbody>
-
+   
    
 </table>
 

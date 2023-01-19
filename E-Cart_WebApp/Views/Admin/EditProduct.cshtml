@@ -33,21 +33,30 @@
         <div class="mb-3">
             <label for="productQuantity" class="form-label">Quantity Per Unit</label>
             <input type="number" class="form-control" id="productQuantity" asp-for="QuantityPerUnit">
+            <span asp-validation-for="QuantityPerUnit" class="text-danger"></span>
+            @Html.ValidationMessageFor(m => m.QuantityPerUnit)
         </div>
         <div class="mb-3">
             <label for="productUnitPrice" class="form-label">Unit Price</label>
             <input type="number" class="form-control" id="productUnitPrice" asp-for="UnitPrice">
+            <span asp-validation-for="UnitPrice" class="text-danger"></span>
+            @Html.ValidationMessageFor(m => m.UnitPrice)
         </div>
         <div class="mb-3">
             <label for="productReorderLevel" class="form-label">Reorder Level</label>
             <input type="number" class="form-control" id="productReorderLevel" asp-for="ReorderLevel">
+            <span asp-validation-for="ReorderLevel" class="text-danger"></span>
+            @Html.ValidationMessageFor(m => m.ReorderLevel)
         </div>
         <div class="mb-3 form-check">
             <label class="form-check-label" for="isDiscontinued">Discontinued</label>
             <input type="checkbox" class="form-check-input" id="isDiscontinued" asp-for="Discontinued">
         </div>
-        <div class="mb-3">
-            <button type="submit" class="btn btn-primary w-100">Edit</button>
+        <div class="mb-3 d-flex justify-content-between">
+            <button type="submit" class="btn btn-primary w-50">Save Changes</button>
+            &nbsp;&nbsp;
+            <button asp-action="Product" class="btn btn-primary w-50">Cancel</button>
+
         </div>
     </form>
 </div>

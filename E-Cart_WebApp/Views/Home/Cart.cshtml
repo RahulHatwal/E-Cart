@@ -1,0 +1,83 @@
+﻿@*@model IEnumerable<E_Cart_WebApp.Models.ProductsCart>*@
+@model IEnumerable<E_Cart_WebApp.DTOs.ProductCartDTO>
+
+
+@{
+    ViewData["Title"] = "AddToCart";
+}
+
+<h1 class="text-center mt-4">Products in your cart</h1>
+
+
+<table class="table table-striped table-primary table-responsive-lg table-responsive-md table-responsive-sm mt-4">
+
+    <thead>
+        <tr class="mt-1">
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+             
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CategoryName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UnitPrice)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr class="mt-1">
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CategoryName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UnitPrice)
+                </td>
+                <td class="d-flex ">
+                    <button class="btn btn-primary"><i class="bi bi-bag">&emsp;Buy</i></button>
+                    <a class="btn btn-warning mx-2" asp-controller="Home" asp-action="ClearCartById" asp-route-id="@item.ProductId" type="button">Remove</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+
+</table>
+
+<div class="d-flex justify-content-between">
+    <div>
+        <a class="btn btn-warning" asp-action="ClearCart">Clear your Cart</a>
+        <button class="btn btn-primary mx-2" data-bs-toggle="modal" data-bs-target="#orderConfirmation"><i class="bi bi-bag">&emsp;Place Order</i></button>
+        <!-- Modal -->
+        <div class="modal fade" id="orderConfirmation" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Are you sure you want to delete selected product ?</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                        <a type="button" class="btn btn-danger" asp-action="PlaceOrder">Yes</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="fs-4 text-light fw-bold mx-2 bg-primary p-3 rounded-4 d-flex flex-column align-items-center fs-6">Total Amount<div>&#8377; @ViewBag.totalPrice</div></div>
+    </div>
+</div>
