@@ -6,13 +6,14 @@ using E_Cart_WebApp.DTOs;
 
 namespace E_Cart_WebApp.Controllers
 {
-    public class AccountsController : Controller
+    [Authorize]
+    public class AccountController : Controller
     {
         private readonly HttpClient _httpClient;
         private readonly ILogger<HomeController> _logger;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
-        public AccountsController(ILogger<HomeController> logger, UserManager<IdentityUser> userManager,
+        public AccountController(ILogger<HomeController> logger, UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager)
         {
             _logger = logger;

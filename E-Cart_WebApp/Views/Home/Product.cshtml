@@ -9,7 +9,7 @@
 
             $(".add").each(function () {
                 $(this).click(function () {
-                    qty = $(this).closest("tr").find('input[type=number]');
+                    qty = $(this).closest("span").find('input[type=number]');
                     quantity = qty.val()
                     $.ajax({
                         type: 'POST',
@@ -29,7 +29,7 @@
 
             $(".sub").each(function () {
                 $(this).click(function () {
-                    qty = $(this).closest("tr").find('input[type=number]');
+                    qty = $(this).closest("span").find('input[type=number]');
                     quantity = qty.val()
                     $.ajax({
                         type: 'POST',
@@ -46,11 +46,12 @@
                 })
             })
 
-
-            $("input[type='checkbox']").on("click", function () {
-
-                if ($(this).is(":checked")) {
-                    console.log("checked");
+            $(".addToCart").on("click", function () {
+                console.log("AddToCart Button Clicked");
+                textqty = $(this).closest(".card").find('.order-qty');
+                var quantity = textqty.val();
+                if (quantity != 0) {
+                    console.log("clicked");
                     var productId = $(this).data("product-id");
                     var productName = $(this).data("product-name");
                     var productPrice = $(this).data("product-price");
@@ -58,9 +59,9 @@
 
                     var data = {
                         ProductId: productId,
-                        ProductName : productName,
-                        ProductPrice : productPrice,
-                        CartQuantity: $(this).closest("tr").find(".order-qty").val(),
+                        ProductName: productName,
+                        ProductPrice: productPrice,
+                        CartQuantity: $(this).closest(".card").find(".order-qty").val(),
                         UserId: 1
                     };
                     console.log(productId);
@@ -80,11 +81,50 @@
                     });
 
 
-                
+
                 }
                 else {
-                    console.log("not checked")
+                    alert("Quantity cannot be zero. Enter Quantity")
                 }
+
+            //$("input[type='checkbox']").on("click", function () {
+
+            //    if ($(this).is(":checked")) {
+            //        console.log("checked");
+            //        var productId = $(this).data("product-id");
+            //        var productName = $(this).data("product-name");
+            //        var productPrice = $(this).data("product-price");
+
+
+            //        var data = {
+            //            ProductId: productId,
+            //            ProductName : productName,
+            //            ProductPrice : productPrice,
+            //            CartQuantity: $(this).closest("tr").find(".order-qty").val(),
+            //            UserId: 1
+            //        };
+            //        console.log(productId);
+            //        console.log(data);
+
+            //        $.ajax({
+            //            type: "POST",
+            //            url: "AddToCart",
+            //            data: data,
+            //            success: function (response) {
+            //                // do something with the response
+            //                console.log(response);
+            //            },
+            //            error: function (xhr, status, error) {
+            //                console.log("An error occurred: " + error);
+            //            }
+            //        });
+
+
+                
+            //    }
+            //    else {
+            //        console.log("not checked")
+            //    }
                 
             
             })
@@ -191,12 +231,12 @@
 
     @{
     ViewData["Title"] = "Product";
-    //var cartQuantity = @ViewBag.ProductsInCartCount;
+    var cartQuantity = @ViewBag.ProductsInCartCount;
 }
-<div class="w-100 mt-5">
-    <h1>Product</h1>
+<div class="w-100 mt-5 mb-5">
+    <h1 class=" text-center text-uppercase">Catalog</h1>
 </div>
-<div class="d-flex justify-content-between align-content-center">
+<div class="d-flex justify-content-between align-content-center mb-5">
     <form method="get" class="d-flex w-50" asp-action="Product">
         <input class="form-control me-sm-2" type="text" name="productSearch" placeholder="Search Product">
         <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
@@ -204,14 +244,21 @@
     <div>
         <a class="btn btn-primary mx-3" id="add-to-cart-btn" type="button">Add to Cart</a>
 
-        <a class="btn btn-primary" type="button" asp-action="Cart"><i class="bi bi-bag">&nbsp; Cart()</i></a>
+        <a class="btn btn-primary" type="button" asp-action="Cart">
+            <i class="bi bi-cart2">
+                &nbsp; Cart(
+                @(cartQuantity == 0 ? 0 : cartQuantity)
+                )
+            </i>
+        </a>
+
     </div>
 
 </div>
 
 
 
-<table class="table table-striped table-responsive-lg table-responsive-md table-responsive-sm  mt-5">
+@*<table class="table table-striped table-responsive-lg table-responsive-md table-responsive-sm  mt-5">
     <thead>
 
         <tr >
@@ -251,13 +298,13 @@
                     @Html.DisplayFor(modelItem => item.UnitsInStock)
                 </td>
                 <td>
-                    QTY : <input type="number"  class="order-qty" id="1" value="0" min="0" max="50" />
+                    QTY : <input type="number"  class="order-qty" id="1" value="0" min="0" max="50" width="20px" class="bg-dark"/>
                     <button type="button" style="border:none" id="sub" class="sub"><i class="bi bi-dash-square-fill"></i></button>
                     <button type="button" style="border:none" id="add" class="add"><i class="bi bi-plus-square-fill"></i></button>
                 </td>
                 <td>
-                    @*<input type="checkbox" id="product-id-checkbox" value="@item.ProductID">*@
-                    <input type="checkbox" class="product-checkbox" data-product-name="@item.ProductName" data-product-price="@item.UnitPrice" data-product-id="@item.ProductID">
+                    <input type="checkbox" id="product-id-checkbox" value="@item.ProductID">
+                    <input type="button" class="btn btn-primary" id="addToCart" data-product-name="@item.ProductName" data-product-price="@item.UnitPrice" data-product-id="@item.ProductID" value="Add to Cart">
 
                 </td>
 
@@ -266,15 +313,15 @@
             </tr>
         }
     </tbody>
-</table>
+</table>*@
 
 
 <div class="container">
     <div class="row">
         @foreach (var item in Model)
         {
-            <div class="col-md-3">
-                <div class="card">
+            <div class="col-md-4">
+                @*<div class="card">
                     <div class="card-body">
                         <h5 class="card-title">@Html.DisplayFor(modelItem => item.ProductName)</h5>
                         <p class="card-text">Price: $@Html.DisplayFor(modelItem => item.UnitPrice)</p>
@@ -284,8 +331,48 @@
                         <button type="button" style="border:none" id="add" class="add"><i class="bi bi-plus-square-fill"></i></button>
                         <input type="checkbox" class="product-checkbox" data-product-name="@item.ProductName" data-product-price="@item.UnitPrice" data-product-id="@item.ProductID">
                     </div>
+                </div>*@
+
+
+
+                <div class="card mb-5 ">
+                   
+                    <svg xmlns="http://www.w3.org/2000/svg" class="d-block user-select-none" width="100%" height="200" aria-label="Placeholder: Image cap" focusable="false" role="img" preserveAspectRatio="xMidYMid slice" viewBox="0 0 318 180" style="font-size:1.125rem;text-anchor:middle">
+                        <rect width="100%" height="100%" fill="#868e96"></rect>
+                        <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text>
+                    </svg>
+                    <a class="card-header text-decoration-none fs-4 text-primary text-center bg-light" asp-action="ProductDetail" asp-route-id="@item.ProductID">@Html.DisplayFor(modelItem => item.ProductName)</a>
+                    <div class="card-body">
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content. <a class="text-decoration-none text-info" asp-action="ProductDetail" asp-route-id="@item.ProductID"><i class="bi bi-eye"></i>&nbsp;View</a></p>
+                        
+                       
+                    </div>
+          
+                    <div class="d-flex flex-column justify-content-center align-items-center">
+                        <span class="">Quantity : <input type="number" class="order-qty mb-3" id="1" value="0" min="0" max="50" width="20px" class="bg-dark" />
+                        <button type="button" style="border:none" id="sub" class="sub"><i class="bi bi-dash-square-fill"></i></button>
+                            <button type="button" style="border:none" id="add" class="add"><i class="bi bi-plus-square-fill"></i></button>
+                        </span>
+
+                        <div style="display:flex">
+                            <input type="text" class="input-group-text qty" style="width:70px;height:30px" /> &nbsp; &nbsp;
+                            <button class="btn btn-primary btn-sm sub" style="height:30px">-</button>
+                            <button class="btn btn-primary btn-sm add" style="height:30px">+</button>
+                        </div>
+                       @* <a href="#" class="btn btn-outline-primary" style="">Card link</a>*@
+                        <span class=" fs-5 mb-3">Price: <i class="bi bi-currency-rupee">&nbsp;@Html.DisplayFor(modelItem => item.UnitPrice)</i></span>
+                        
+                    </div>
+                    <input type="button" class="btn btn-primary mt-4 w-100 addToCart" data-product-name="@item.ProductName" data-product-price="@item.UnitPrice" data-product-id="@item.ProductID" value="Add to Cart">
+@*
+                    <div class="card-footer text-muted">
+                        2 days ago
+                    </div>*@
                 </div>
             </div>
+
+
+            
         }
     </div>
 </div>

@@ -219,7 +219,7 @@ namespace E_Cart_WebApp.Controllers
 
             var response = await _httpClient.PostAsJsonAsync<ProductsCart>($"https://localhost:7185/api/cart/", productInCart);
 
-            if (response.IsSuccessStatusCode)
+            if (response != null)
             {
                 return "Item is added to the Cart";
             }

@@ -46,7 +46,7 @@
                     @Html.DisplayFor(modelItem => item.UnitPrice)
                 </td>
                 <td class="d-flex ">
-                    <button class="btn btn-primary"><i class="bi bi-bag">&emsp;Buy</i></button>
+              @*      <button class="btn btn-primary"><i class="bi bi-bag">&emsp;Buy</i></button>*@
                     <a class="btn btn-warning mx-2" asp-controller="Home" asp-action="ClearCartById" asp-route-id="@item.ProductId" type="button">Remove</a>
                 </td>
             </tr>
@@ -65,7 +65,7 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Are you sure you want to delete selected product ?</h1>
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Confirm order ?</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 

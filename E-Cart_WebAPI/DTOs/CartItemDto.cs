@@ -8,6 +8,8 @@
         public string CategoryName { get; set; }
         public string ProductName { get; set; }
         public decimal UnitPrice { get; set; }
+
+        public byte[] Picture { get; set; }
         public int Quantity { get; set; }
     }
 }

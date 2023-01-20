@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> signInManager;
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -30,7 +32,7 @@
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>*@
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Product">Products User View</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Product">Catalog</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Admin" asp-action="Product">Products Admin View</a>
@@ -39,9 +41,9 @@
 
                     </ul>
                     <div class="align-items-center">
-                        <i class="bi bi-cart2 fs-4 mx-2" style="color:white"></i>
-                   @*     <a class="btn btn-outline-light mx-1 rounded-2">Login</a>
-                        <a class="btn btn-outline-light mx-1 rounded-2">Register</a>*@
+                       
+                       @* <a class="btn btn-outline-light mx-1 rounded-2" asp-action="Login" asp-controller="Accounts">Login</a>
+                        <a class="btn btn-outline-light mx-1 rounded-2" asp-action="Register" asp-controller="Accounts">Register</a>*@
                        
                     </div>
                     <partial name="_LoginPartial" />
@@ -50,6 +52,10 @@
                         <input class="form-control me-sm-2" type="text" placeholder="Search">
                         <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
                     </form>*@
+
+                
+                   
+                    
                 </div>
             </div>
         </nav>

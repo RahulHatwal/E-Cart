@@ -1,6 +1,7 @@
 ﻿
 using E_Cart_WebApp.DTOs;
 using E_Cart_WebApp.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
@@ -23,6 +24,9 @@ namespace E_Cart_WebApp.Controllers
         {
             return View();
         }
+
+       
+
 
 
 
@@ -110,10 +114,10 @@ namespace E_Cart_WebApp.Controllers
         public async Task<IActionResult> ProductCreate(ProductDTO product)
         {
 
-            if (!ModelState.IsValid)
-            {
-                return RedirectToAction("ProductCreate");
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //    return RedirectToAction("ProductCreate");
+            //}
             var newProduct = new ProductDTO()
             {
                 ProductName = product.ProductName,
