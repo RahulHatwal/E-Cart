@@ -40,6 +40,7 @@ namespace E_Cart_WebAPI.Controllers
                     CategoryName = category.CategoryName,
                     ProductName = product.ProductName,
                     UnitPrice = (decimal)product.UnitPrice,
+                    Picture = category.Picture,
                     Quantity = (int)item.CartQuantity
 
                 };

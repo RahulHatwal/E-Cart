@@ -74,14 +74,18 @@ if (app.Environment.IsDevelopment())
     {
         options.DisplayOperationId();
     });
-    
+
+
+
 }
 
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
+
+
 
 app.MapControllers();
+app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 
 app.Run();

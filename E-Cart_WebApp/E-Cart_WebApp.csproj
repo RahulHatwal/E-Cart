@@ -8,21 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="Views\Views\Admin\Product.cshtml" />
-    <None Include="Views\Views\Admin\ProductDetail.cshtml" />
-    <None Include="Views\Views\Home\GetAllProducts.cshtml" />
-    <None Include="Views\Views\Home\Index.cshtml" />
-    <None Include="Views\Views\Home\Privacy.cshtml" />
-    <None Include="Views\Views\Home\Product.cshtml" />
-    <None Include="Views\Views\Home\ProductDetail.cshtml" />
-    <None Include="Views\Views\Shared\Error.cshtml" />
-    <None Include="Views\Views\Shared\_Layout.cshtml" />
-    <None Include="Views\Views\Shared\_ValidationScriptsPartial.cshtml" />
-    <None Include="Views\Views\_ViewImports.cshtml" />
-    <None Include="Views\Views\_ViewStart.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="bootstrap" Version="5.2.3" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.13" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.13" />

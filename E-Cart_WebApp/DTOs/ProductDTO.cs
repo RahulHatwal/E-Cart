@@ -7,11 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace E_Cart_WebApp.DTOs
 {
-    [Index("CategoryId", Name = "CategoriesProducts")]
-    [Index("CategoryId", Name = "CategoryID")]
-    [Index("ProductName", Name = "ProductName")]
-    [Index("SupplierId", Name = "SupplierID")]
-    [Index("SupplierId", Name = "SuppliersProducts")]
+    //[Index("CategoryId", Name = "CategoriesProducts")]
+    //[Index("CategoryId", Name = "CategoryID")]
+    //[Index("ProductName", Name = "ProductName")]
+    //[Index("SupplierId", Name = "SupplierID")]
+    //[Index("SupplierId", Name = "SuppliersProducts")]
     public class ProductDTO
     {
 

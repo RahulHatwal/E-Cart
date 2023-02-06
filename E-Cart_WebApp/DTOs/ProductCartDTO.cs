@@ -13,10 +13,10 @@ namespace E_Cart_WebApp.DTOs
         [Display(Name = "Category")]
             public string CategoryName { get; set; }
 
-        [Display(Name = "Product Name")]
+        [Display(Name = "Product")]
         public string ProductName { get; set; }
 
-        [Display(Name = "Unit Price")]
+        [Display(Name = "Price")]
         public decimal UnitPrice { get; set; }
             public int Quantity { get; set; }
         }
