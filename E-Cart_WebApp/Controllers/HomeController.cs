@@ -1,18 +1,21 @@
 ﻿using E_Cart_WebApp.Data;
 using E_Cart_WebApp.DTOs;
 using E_Cart_WebApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using NuGet.Protocol;
+using System.Data;
 using System.Diagnostics;
 using System.Net;
 using System.Text;
 
 namespace E_Cart_WebApp.Controllers
 {
+    //[Authorize(Roles = "admin,user")]
     public class HomeController : Controller
     {
         private readonly HttpClient _httpClient;
@@ -93,10 +96,10 @@ namespace E_Cart_WebApp.Controllers
             {
                 var responseContent = await response.Content.ReadAsStringAsync();
 
-                var products = JsonConvert.DeserializeObject<List<Product>>(responseContent);
+                var products = JsonConvert.DeserializeObject<GetProductsAPIResponse>(responseContent);
 
 
-                return View(products);
+                return View(products.Data);
 
 
             }
@@ -111,6 +114,10 @@ namespace E_Cart_WebApp.Controllers
             return View();
         }
 
+    
+
+
+
         // Controller for showing a specific product by using id
         public async Task<IActionResult> ProductDetail(int id)
         {
@@ -120,9 +127,9 @@ namespace E_Cart_WebApp.Controllers
             {
                 var responseContent = await response.Content.ReadAsStringAsync();
 
-                var product = JsonConvert.DeserializeObject<Product>(responseContent);
+                var product = JsonConvert.DeserializeObject<GetProductByIdAPIResponse>(responseContent);
 
-                return View(product);
+                return View(product.Data);
             }
             else
             {
@@ -206,7 +213,7 @@ namespace E_Cart_WebApp.Controllers
             {
                 var responseContent = await responseCartCount.Content.ReadAsStringAsync();
                 var cartCount = JsonConvert.DeserializeObject<int>(responseContent);
-                ViewBag.ProductsInCartCount = cartCount;
+            ViewBag.ProductsInCartCount = cartCount;
             }
             var productInCart = new ProductsCart()
             {
@@ -231,6 +238,22 @@ namespace E_Cart_WebApp.Controllers
         }
 
 
+
+
+        [HttpGet]
+        public async Task<int> CartCount()
+        {
+            var responseCartCount = await _httpClient.GetAsync("https://localhost:7185/api/cart/count");
+            if (responseCartCount.IsSuccessStatusCode)
+            {
+                var responseContent = await responseCartCount.Content.ReadAsStringAsync();
+                var cartCount = JsonConvert.DeserializeObject<int>(responseContent);
+                return cartCount;
+            } else
+            {
+                return 0;
+            }
+        }
 
         public async Task<IActionResult> PlaceOrder()
         {

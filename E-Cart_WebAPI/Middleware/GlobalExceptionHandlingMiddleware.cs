@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -39,30 +40,48 @@ namespace E_Cart_WebAPI.Middleware
 
             var errorResponse = new ErrorResponse
             {
-                Success = false
+                Success = false,
+                ErrorCode = (int)HttpStatusCode.InternalServerError,
+                ErrorMessage = "An error occurred while processing your request. Please try again or contact support."
             };
 
             switch (exception)
             {
-                case ApplicationException ex:
-                    if (ex.Message.Contains("Invalid token"))
+                case ApplicationException appEx:
+                    if (appEx.Message.Contains("Invalid token"))
                     {
-                        response.StatusCode = (int)HttpStatusCode.Forbidden;
-                        errorResponse.Message = ex.Message;
+                        errorResponse.ErrorCode = (int)HttpStatusCode.Forbidden;
+                        errorResponse.ErrorMessage = appEx.Message;
                         break;
                     }
-                    response.StatusCode = (int)HttpStatusCode.BadRequest;
-                    errorResponse.Message = ex.Message;
+                    errorResponse.ErrorCode = (int)HttpStatusCode.BadRequest;
+                    errorResponse.ErrorMessage = appEx.Message;
                     break;
-                case KeyNotFoundException ex:
-                    response.StatusCode = (int)HttpStatusCode.NotFound;
-                    errorResponse.Message = ex.Message;
+                case KeyNotFoundException keyEx:
+                    errorResponse.ErrorCode = (int)HttpStatusCode.NotFound;
+                    errorResponse.ErrorMessage = keyEx.Message;
+                    break;
+                case ArgumentNullException ex:
+                    errorResponse.ErrorCode = (int)HttpStatusCode.BadRequest;
+                    errorResponse.ErrorMessage = ex.Message;
+                    break;
+                case ArgumentException ex:
+                    errorResponse.ErrorCode = (int)HttpStatusCode.BadRequest;
+                    errorResponse.ErrorMessage = ex.Message;
+                    break;
+                case InvalidOperationException ex:
+                    errorResponse.ErrorCode = (int)HttpStatusCode.BadRequest;
+                    errorResponse.ErrorMessage = ex.Message;
                     break;
 
-            
+                case UnauthorizedAccessException authEx:
+                    errorResponse.ErrorCode = (int)HttpStatusCode.Unauthorized;
+                    errorResponse.ErrorMessage = authEx.Message;
+                    break;
+
                 default:
-                    response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                    errorResponse.Message = "Internal Server Error. Please check logs!";
+                    errorResponse.ErrorCode = (int)HttpStatusCode.InternalServerError;
+                    errorResponse.ErrorMessage = "Internal Server Error. Please check logs!";
                     break;
             }
             _logger.LogError(exception.Message);

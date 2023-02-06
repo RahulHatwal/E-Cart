@@ -8,11 +8,11 @@ using E_Cart_WebApp.Models;
 namespace E_Cart_WebApp.DTOs
 {
 
-    [Index("CategoryId", Name = "CategoriesProducts")]
-    [Index("CategoryId", Name = "CategoryID")]
-    [Index("ProductName", Name = "ProductName")]
-    [Index("SupplierId", Name = "SupplierID")]
-    [Index("SupplierId", Name = "SuppliersProducts")]
+    //[Index("CategoryId", Name = "CategoriesProducts")]
+    //[Index("CategoryId", Name = "CategoryID")]
+    //[Index("ProductName", Name = "ProductName")]
+    //[Index("SupplierId", Name = "SupplierID")]
+    //[Index("SupplierId", Name = "SuppliersProducts")]
     public class ProductUpdateDTO
     {
 
@@ -46,16 +46,16 @@ namespace E_Cart_WebApp.DTOs
         public short? ReorderLevel { get; set; }
         public bool Discontinued { get; set; }
 
-        [ForeignKey("CategoryID")]
-        [InverseProperty("Products")]
-        public virtual Category Category { get; set; }
-        [ForeignKey("SupplierID")]
-        [InverseProperty("Products")]
-        public virtual Supplier Supplier { get; set; }
-        [InverseProperty("Product")]
-        public virtual ICollection<Order_Detail> Order_Details { get; set; }
-        [InverseProperty("Product")]
-        public virtual ICollection<ProductsCart> ProductsCarts { get; set; }
+        //[ForeignKey("CategoryID")]
+        //[InverseProperty("Products")]
+        //public virtual Category Category { get; set; }
+        //[ForeignKey("SupplierID")]
+        //[InverseProperty("Products")]
+        //public virtual Supplier Supplier { get; set; }
+        //[InverseProperty("Product")]
+        //public virtual ICollection<Order_Detail> Order_Details { get; set; }
+        //[InverseProperty("Product")]
+        //public virtual ICollection<ProductsCart> ProductsCarts { get; set; }
         //public static implicit operator ProductDTO(ProductDTO v)
         //{
         //    throw new NotImplementedException();

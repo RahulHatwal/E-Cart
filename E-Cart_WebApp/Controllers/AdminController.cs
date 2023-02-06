@@ -1,15 +1,18 @@
 ﻿
 using E_Cart_WebApp.DTOs;
 using E_Cart_WebApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
+using System.Data;
 using System.Diagnostics;
 using System.Net.Http;
 
 namespace E_Cart_WebApp.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class AdminController : Controller
     {
         private readonly HttpClient _httpClient;
@@ -40,9 +43,9 @@ namespace E_Cart_WebApp.Controllers
             {
                 var responseContent = await response.Content.ReadAsStringAsync();
 
-                var products = JsonConvert.DeserializeObject<List<Models.Product>>(responseContent);
+                var products = JsonConvert.DeserializeObject<GetProductsAPIResponse>(responseContent);
 
-                return View(products);
+                return View(products.Data);
             }
             else
             {
@@ -160,7 +163,7 @@ namespace E_Cart_WebApp.Controllers
                 var suppliersContent = await suppliers.Content.ReadAsStringAsync();
                 var suppliersList = JsonConvert.DeserializeObject<List<Models.Supplier>>(suppliersContent);
                 var productReadAsString = await productInfo.Content.ReadAsStringAsync();
-                var productDetail = JsonConvert.DeserializeObject<Models.Product>(productReadAsString);
+                var productDetail = JsonConvert.DeserializeObject<GetProductByIdAPIResponse>(productReadAsString).Data;
 
               
                 var dropDownDTO = new ProductUpdateDTO() { 
@@ -236,9 +239,9 @@ namespace E_Cart_WebApp.Controllers
             {
                 var responseContent = await response.Content.ReadAsStringAsync();
 
-                var product = JsonConvert.DeserializeObject<Models.Product>(responseContent);
+                var product = JsonConvert.DeserializeObject<GetProductByIdAPIResponse>(responseContent);
 
-                return View(product);
+                return View(product.Data);
             }
             else
             {

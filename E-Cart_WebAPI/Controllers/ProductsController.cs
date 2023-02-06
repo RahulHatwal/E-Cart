@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using E_Cart_WebAPI.Models;
 using E_Cart_WebAPI.Repository;
 using Swashbuckle.AspNetCore;
+using E_Cart_WebAPI.Helpers;
+using System.Net;
 
 namespace E_Cart_WebAPI.Controllers
 {
@@ -39,9 +41,10 @@ namespace E_Cart_WebAPI.Controllers
             var products = await _repository.GetAllBySearchQueryAsync(search);
             if (products == null)
             {
-                throw new ApplicationException("Something went wrong...");
+                //throw new ApplicationException("Something went wrong...");
+                return new CustomResult(404, null, false, "No products found for the given search query");
             }
-            return Ok(products);
+            return new CustomResult(200, products, true, "Successfully retrieved products");
         }
 
         // GET: api/Products
@@ -55,10 +58,40 @@ namespace E_Cart_WebAPI.Controllers
             var products = await _repository.GetAllAsync();
             if (products == null)
             {
-                throw new ApplicationException("Something went wrong...");
+                //throw new ApplicationException("Something went wrong...");
+                return new CustomResult(404, null, false, "Product is not found with given Id");
             }
-            return Ok(products);
+            _logger.LogInformation("Product with given id found");
+            return new CustomResult(200, products, true, "Successfully retrieved products");
         }
+
+
+
+        // GET: api/Products
+        /// <summary>
+        /// Gets a list of all products.
+        /// </summary>
+        /// 
+        //[Route("desc")]
+        //[HttpGet]
+        //public async Task<IActionResult> GetProductsDesc()
+        //{
+        //    try
+        //    {
+        //        var products = await _repository.GetAllAsync();
+        //        if (products == null)
+        //        {
+        //            throw new ApplicationException("Something went wrong...");
+        //        }
+        //        var productsDesc = products.OrderByDescending(p => p.ProductName).ToList();
+        //        return 
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(ex);
+        //    }
+        //}
+
 
 
         // GET: api/Products/5
@@ -67,18 +100,19 @@ namespace E_Cart_WebAPI.Controllers
         /// Gets a specific product by ID.
         /// </summary>
         [HttpGet("{id}")]
-        public async Task<ActionResult<Product>> GetProduct(int id)
+        public async Task<IActionResult> GetProduct(int id)
         {
             var product = await _repository.GetByIdAsync(id);
 
             if (product == null)
             {
-                _logger.LogWarning("Product is not found with given Id");
-                throw new KeyNotFoundException("Product is not found with given Id");
+               // _logger.LogWarning("Product is not found with given Id");
+                return new CustomResult(404, null, false, "Product is not found with given Id");
             }
             _logger.LogInformation("Product with given id found");
-            return Ok(product);
+            return new CustomResult(200, product, true, "Successfully retrieved product");
         }
+
 
         // POST: api/Products
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -86,20 +120,17 @@ namespace E_Cart_WebAPI.Controllers
         /// Creating a product.
         /// </summary>
         [HttpPost]
-        public async Task<ActionResult<Product>> PostProduct(Product product)
+        public async Task<IActionResult> PostProduct(Product product)
         {
-          
             product = await _repository.AddAsync(product);
 
-            if(product != null)
+            if (product != null)
             {
-                return CreatedAtAction("GetProduct", new { id = product.ProductId }, product);
+                return new CustomResult(201, product, true, "Product successfully added");
             }
-       
             else
             {
-                // Log the error (uncomment ex variable name and write a log.
-                throw new ApplicationException("An error occurred while saving the product. Please try again.");
+                return new CustomResult(500, null, false, "An error occurred while saving the product. Please try again.");
             }
         }
 
@@ -114,7 +145,7 @@ namespace E_Cart_WebAPI.Controllers
         {
             if (id != product.ProductId)
             {
-                return BadRequest();
+                return new CustomResult((int)HttpStatusCode.NotFound, null, false, "Product not found");
             }
 
             try
@@ -125,15 +156,15 @@ namespace E_Cart_WebAPI.Controllers
             {
                 if (!await _repository.ExistsAsync(id))
                 {
-                    throw new KeyNotFoundException("Product Cannot be Updated because Product is not found with given Id");
+                    return new CustomResult((int)HttpStatusCode.NotFound,null,false,"Product not found");
                 }
                 else
                 {
-                    throw new KeyNotFoundException("Something went wrong...");
+                    return new CustomResult((int)HttpStatusCode.Conflict,null,false,"Conflict Occured");
                 }
             }
-
-            return NoContent();
+            var productInfo = await _repository.GetByIdAsync(id);
+            return new CustomResult((int)HttpStatusCode.OK, productInfo, true,"Update Successful" );
         }
 
 
@@ -143,16 +174,18 @@ namespace E_Cart_WebAPI.Controllers
         /// Deleting a product.
         /// </summary>
         [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteProduct(int id)
+        public async Task<IActionResult> DeleteProduct(int id)
         {
             var product = await _repository.GetByIdAsync(id);
             if (product == null)
             {
-                throw new KeyNotFoundException("Product is not found with given Id");
+                return new CustomResult(404, null, false, "Product not found with given Id");
             }
             await _repository.DeleteAsync(id);
-            return NoContent();
+            //await _repository.ReseedProductIds();
+            return new CustomResult(200, null, true, "Product successfully deleted");
         }
+
 
         private async Task<bool> ProductExists(int id)
         {

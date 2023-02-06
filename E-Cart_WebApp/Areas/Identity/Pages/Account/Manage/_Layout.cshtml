@@ -9,17 +9,24 @@
     }
 }
 
-<h1>Manage your account</h1>
 
-<div>
-    <h2>Change your account settings</h2>
+<div class="d-sm-block d-md-none">
+    <img src="~/images/undraw_personal_info_re_ur1n.svg" alt="image" width="100%" style="">
+</div>
+
+
+<div class="rounded-2 mt-md-5 mt-2 p-4" style="border:3px solid #e6e6e6;">
+    <h2 class="text-center text-uppercase">Account Settings</h2>
     <hr />
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-3" >
             <partial name="_ManageNav" />
         </div>
-        <div class="col-md-9">
+        <div class="col-md-6 mt-3">
             @RenderBody()
+        </div>
+        <div class="col-md-3 d-none d-md-block d-lg-block mt-5">
+            <img src="~/images/undraw_personal_information_re_vw8a.svg" alt="image" width="100%" style="">
         </div>
     </div>
 </div>

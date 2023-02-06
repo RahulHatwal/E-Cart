@@ -1,16 +1,21 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@inject RoleManager<IdentityRole> RoleManager
+
 
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
-
+@*@{var roles = await UserManager.GetRolesAsync(await UserManager.GetUserAsync(User));}*@
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
-{
-    <li class="nav-item">
-            <a class="text-uppercase"><i class="bi bi-cart2 fs-4 mx-2" style="color:white"></i>&nbsp;Cart</a>
-    </li>
-    <li class="nav-item">
-        <a id="manage" class="nav-link text-light" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
+{            
+    @*foreach(var role in roles)
+    {
+            <text> @role </text>
+    }*@
+    var user = await UserManager.GetUserAsync(User);
+    var roles = await UserManager.GetRolesAsync(user);
+    <li class="nav-item text-capitalize">
+            <a id="manage" class="nav-link text-light" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@(roles.Contains("admin")? "Admin" : "Hello")  <span class="text-lowercase">@UserManager.GetUserName(User)!</span></a>
     </li>
     <li class="nav-item">
         <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
@@ -20,10 +25,10 @@
 }
 else
 {
-    <li class="nav-item">
+    <li class="nav-item text-uppercase">
         <a class="nav-link text-light text-uppercase" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
     </li>
-    <li class="nav-item">
+    <li class="nav-item text-uppercase">
         <a class="nav-link text-light text-uppercase" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
     </li>
 }

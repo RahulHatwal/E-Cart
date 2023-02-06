@@ -77,11 +77,9 @@
                     <div class="btn-group" role="group">
                         <a asp-action="EditProduct" asp-route-id="@item.ProductID" type="button" class="btn btn-primary">Edit</a>
                         <a asp-action="ProductDetail" asp-route-id="@item.ProductID" type="button" class="btn btn-secondary">Details</a>
-                        <button type="button" data-bs-toggle="modal" data-bs-target="#deleteConfirmation" class="btn btn-warning">Delete</button>
-                        <!-- Button trigger modal -->
-                       @* <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                            Launch static backdrop modal
-                        </button>*@
+                        <a asp-action="Delete" asp-route-id="@item.ProductID" type="button" class="btn btn-danger">Delete</a>
+
+                       @* <button type="button" data-bs-toggle="modal" data-bs-target="#deleteConfirmation" class="btn btn-warning">Delete</button>
 
                         <!-- Modal -->
                         <div class="modal fade" id="deleteConfirmation" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -98,7 +96,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>*@
                     </div>
                   
                 </td>

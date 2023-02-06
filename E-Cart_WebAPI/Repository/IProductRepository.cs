@@ -19,5 +19,7 @@ namespace E_Cart_WebAPI.Repository
         Task<Product> UpdateAsync(Product product);
         Task DeleteAsync(int id);
         Task<bool> ExistsAsync(int id);
+
+        Task ReseedProductIds();
     }
 }
